@@ -15,7 +15,7 @@ Apple Music doesn't use certificate pinning for the actual streams (it does for 
 Install mitmproxy and verify that it works (that you installed the certificate, set the HTTPS proxy on your internet connection etc.).
 Run mitmproxy with the script:
 ```
-/Applications/mitmproxy.app/Contents/MacOS/mitmproxy --allow-hosts=aod.itunes.apple.com -s ~/path/to/strip-lossy-streams.py
+/Applications/mitmproxy.app/Contents/MacOS/mitmdump --allow-hosts=aod.itunes.apple.com -s ~/path/to/strip-lossy-streams.py
 ```
 Enjoy lossless streaming.
 

@@ -30,10 +30,10 @@ def strip_unwanted_streams(m3u8_bytes):
                 skip_next_line = True
                 continue
         output_lines.append(line)
-    if (output_lines):
+    if (wanted_streams):
         return b''.join(output_lines)
     return m3u8_bytes
 
 def response(flow):
-	if flow.response.headers["content-type"] == "application/vnd.apple.mpegurl":
-		flow.response.content = strip_unwanted_streams(flow.response.content)
+    if flow.response.headers["content-type"] == "application/vnd.apple.mpegurl":
+        flow.response.content = strip_unwanted_streams(flow.response.content)
