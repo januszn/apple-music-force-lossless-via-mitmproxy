@@ -12,16 +12,19 @@ Apple Music doesn't use certificate pinning for the actual streams (it does for 
 
 ## Usage
 
-Install mitmproxy and verify that it works (that you installed the certificate, set the HTTPS proxy on your internet connection etc.).
+Install mitmproxy and verify that it works - that you set the HTTPS proxy on your internet connection, installed the certificate etc.
+You won't need the proxy to remain set, we'll use mitmproxy's "local" mode to intercept only the Music app.
+
 Run mitmproxy with the script:
 ```
-/Applications/mitmproxy.app/Contents/MacOS/mitmdump --allow-hosts=aod.itunes.apple.com -s ~/path/to/strip-lossy-streams.py
+/Applications/mitmproxy.app/Contents/MacOS/mitmdump --allow-hosts=aod.itunes.apple.com --mode local:Music -s ~/path/to/strip-lossy-streams.py
 ```
+
 Enjoy lossless streaming.
 
 ## Notes
 
 - I literally just read the Python tutorial to write this, don't hate me.
 - This will not allow you to rip the streams in any way, they're still encrypted.
-- I tried Tidal but it doesn't have half the stuff I listen to.
+- I tried Tidal, but it doesn't have half the stuff I listen to.
 - Apple folks, please fix this. It can be an option (I'll leave it to you to phrase "minimum streaming quality"/"disable adaptive streaming" in a way that won't confuse users), or you can re-check all your streams to confirm they align perfectly, or you can attempt to detect on-device if stream switch is going to cause an audible skip.
