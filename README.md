@@ -32,19 +32,18 @@ hear the benefits of lossless over the "High Quality" 256 kbps AAC you need a go
 some dose of self-delusion.
 
 Second, there can be multiple Lossless (not Hi-Res Lossless) variants of the same song, for example 16-bit 44100 Hz and
-24-bit 44100 Hz. I don't think I've encountered any that are misaligned like the lossy ones can be, but after 3 weeks
-of running the initial version of this script, which would force the client to choose only from the lossless variants
-of a song, which meant Apple Music, instead of starting with the lossy variant and then switching to the lossless
-variant appropriate for my bandwidth, would start with the lower-quality lossless one, I noticed audible "pops" on
-lossless variant switches on my Mac Mini, which is connected via HDMI to a TV, which is then connected to an amplifier
-via digital optical cable (TOSLINK). I guess Apple Music reinitializes the audio output to set the exact format to
-match the stream, and my equipment in particular doesn't respond to it well. Again, good intentions but poor outcome.
-The second version of the script forces Apple Music to stream only one - lossless - variant.
+24-bit 44100 Hz. Suppose you force the player to only stream lossless variants to avoid the first problem. Turns out
+that even if they are not misaligned, switching audio formats may cause an audible "pop" if you use specific audio
+hardware - in my case, that's a Mac Mini connected to a TV via HDMI, which is then connected to an audio amplifier via
+digital optical cable (TOSLINK). I assume that's because Apple Music (correctly) reinitializes the audio output to
+match the audio format exactly, but the TV and/or the amplifier considers this a big deal and makes the same sound as
+when you turn it on. Note that this may be happening even with lossy/lossless variant switches, it's just that in that
+case the first problem is much more common. 
 
 ## Workaround
 
 Apple Music doesn't use certificate pinning for the actual streams (it does for everything else), so it's possible to
-MITM it and remove the unwanted lossy streams from the
+MITM it and remove the unwanted lossy (for problem 1) and extra lossless (for problem 2) streams from the
 [main m3u8 file](https://datatracker.ietf.org/doc/html/rfc8216#section-4.3.4). The script in this repository uses
 [mitmproxy](https://mitmproxy.org) for that purpose.
 
@@ -52,8 +51,8 @@ MITM it and remove the unwanted lossy streams from the
 
 Install mitmproxy and verify that it works - that you set the HTTPS proxy on your internet connection, installed the
 certificate etc. You won't need the proxy to remain set, we'll use mitmproxy's "local" mode to intercept only the Music
-app. Because of the second problem outlined above, the script needs to know if you want Hi-Res Lossless - if you do,
-uncomment the relevant line.
+app. Because of the second problem outlined above, the script needs to know if you want Hi-Res Lossless, because it
+needs to picks a single best variant to stream. If you do, uncomment the relevant line.
 
 Run mitmproxy with the script:
 ```
